@@ -1,5 +1,6 @@
 package com.rach.swipestore.di
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.rach.swipestore.common.BASE_URL
 import com.rach.swipestore.data.remote.ApiService
@@ -8,6 +9,7 @@ import com.rach.swipestore.domain.repository.ProductRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,8 +41,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProductRepository(apiService: ApiService): ProductRepository {
-        return ProductRepoImp(apiService)
+    fun provideProductRepository(apiService: ApiService,@ApplicationContext context: Context): ProductRepository {
+        return ProductRepoImp(apiService, context = context)
     }
 
 }

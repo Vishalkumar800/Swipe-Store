@@ -17,5 +17,33 @@ class FieldStateViewModel @Inject constructor() : ViewModel(){
         _productTypeField.value = newValue
     }
 
+    private val _productName = MutableStateFlow("")
+    val productName : StateFlow<String> = _productName.asStateFlow()
+
+    fun onProductNameChange(newValue: String){
+        _productName.value = newValue
+    }
+
+    private val _sellingPrice = MutableStateFlow("")
+    val sellingPrice: StateFlow<String> = _sellingPrice.asStateFlow()
+
+    fun onSellingPriceChange(newValue: String){
+        _sellingPrice.value = newValue
+    }
+
+    private val _taxRate = MutableStateFlow("")
+    val taxRate : StateFlow<String> = _taxRate.asStateFlow()
+
+    fun onTaxRateChange(newValue: String){
+        _taxRate.value =  newValue
+    }
+
+    fun clearAllFields(){
+        _productName.value = ""
+        _productTypeField.value = ""
+        _sellingPrice.value = ""
+        _taxRate.value = ""
+    }
+
 }
 

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -129,6 +130,10 @@ fun HomeScreen(
                     .padding(12.dp),
                 productList = state.data ?: emptyList()
             )
+        }
+
+        is Resources.Empty -> {
+            CircularProgressIndicator()
         }
     }
 

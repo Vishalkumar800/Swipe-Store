@@ -9,4 +9,6 @@ sealed class Resources<T>(
     class Success<T>(data: T? = null) : Resources<T>(data = data)
     class Error<T>(errorMessage: String) : Resources<T>(errorMessage = errorMessage)
 
+    class Empty<T> : Resources<T>()
+
 }
