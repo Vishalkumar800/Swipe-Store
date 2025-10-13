@@ -11,4 +11,5 @@ interface ProductRepository {
     fun getProducts(searchKeyword: String? = null): Flow<Resources<List<ResponseItem>>>
     fun addProduct(productDetails: ProductDetails): Flow<Resources<AddProductResponse>>
 
+
 }

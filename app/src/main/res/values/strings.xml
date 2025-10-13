@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SwipeStore</string>
     <string name="selected_product_image">Selected Product Image</string>
+    <string name="arrow_back_icon">Arrow Back Icon</string>
 </resources>

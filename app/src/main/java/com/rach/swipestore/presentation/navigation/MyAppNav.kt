@@ -8,7 +8,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.rach.swipestore.presentation.ui.AddProductScreen
 import com.rach.swipestore.presentation.ui.HomeScreen
+import com.rach.swipestore.presentation.ui.PaymentScreen
 import com.rach.swipestore.presentation.ui.PendingScreen
+import com.rach.swipestore.presentation.ui.SearchScreen
 import com.rach.swipestore.presentation.ui.SettingsScreen
 
 @Composable
@@ -27,6 +29,9 @@ fun MyAppNav(modifier: Modifier = Modifier,navController: NavHostController) {
             PendingScreen()
         }
 
+        composable (Screens.SearchScreen.route){
+            SearchScreen()
+        }
         composable(Screens.Setting.route){
             SettingsScreen()
         }
@@ -37,6 +42,10 @@ fun MyAppNav(modifier: Modifier = Modifier,navController: NavHostController) {
 
         composable(Screens.Pending.route){
             PendingScreen()
+        }
+
+        composable(Screens.Payment.route) {
+            PaymentScreen()
         }
     }
 

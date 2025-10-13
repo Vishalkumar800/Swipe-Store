@@ -10,6 +10,7 @@ import com.rach.swipestore.domain.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,51 +23,58 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: ProductRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private val _allProducts = MutableStateFlow<Resources<List<ResponseItem>>>(Resources.Loading())
-    val allProducts : StateFlow<Resources<List<ResponseItem>>> = _allProducts.asStateFlow()
+    private val _searchData = MutableStateFlow<Resources<List<ResponseItem>>>(Resources.Loading())
+    val searchData: StateFlow<Resources<List<ResponseItem>>> = _searchData.asStateFlow()
 
-    private val _productAddedResponse = MutableStateFlow<Resources<AddProductResponse>>(Resources.Empty())
-    val productAddedResponse : StateFlow<Resources<AddProductResponse>> = _productAddedResponse.asStateFlow()
+    private val _productAddedResponse =
+        MutableStateFlow<Resources<AddProductResponse>>(Resources.Empty())
+    val productAddedResponse: StateFlow<Resources<AddProductResponse>> =
+        _productAddedResponse.asStateFlow()
+
 
     private val _searchQuery = MutableStateFlow("")
-    val searchQuery : StateFlow<String> = _searchQuery.asStateFlow()
+    val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
+
+    private var searchJob: Job? = null
+
+    fun onSearchQueryChange(newQuery: String) {
+        _searchQuery.value = newQuery
+    }
 
     init {
         getProducts()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
-    fun getProducts(){
-        viewModelScope.launch {
-
-            _searchQuery.debounce(400)
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    fun getProducts() {
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            _searchQuery
+                .debounce(400)
                 .distinctUntilChanged()
                 .flatMapLatest { query ->
-                    repository.getProducts(query.ifBlank { null })
-                }.collect {
-                    _allProducts.value = it
+                    repository.getProducts(query)
                 }
-
-            repository.getProducts().collect { data ->
-                _allProducts.value = data
-            }
+                .collect { data ->
+                    _searchData.value = data
+                }
         }
     }
 
-    fun updateSearchQuery(query: String){
-        _searchQuery.value = query
-    }
-
-    fun addProduct(productDetails: ProductDetails){
+    fun addProduct(productDetails: ProductDetails) {
         viewModelScope.launch {
             repository.addProduct(
                 productDetails = productDetails
-            ).collect {response ->
+            ).collect { response ->
                 _productAddedResponse.value = response
             }
         }
     }
 
+    fun clearSearch() {
+        _searchQuery.value = ""
+        _searchData.value = Resources.Empty()
+    }
 }

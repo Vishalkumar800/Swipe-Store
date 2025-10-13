@@ -33,6 +33,7 @@ import com.rach.swipestore.common.Resources
 import com.rach.swipestore.domain.model.ResponseItem
 import com.rach.swipestore.presentation.components.AdvanceBottomBar
 import com.rach.swipestore.presentation.components.BottomAppBarDataClass
+import com.rach.swipestore.presentation.components.CustomEmptyScreen
 import com.rach.swipestore.presentation.components.CustomProgressBar
 import com.rach.swipestore.presentation.components.CustomTopAppBar
 import com.rach.swipestore.presentation.components.ErrorScreen
@@ -47,6 +48,7 @@ fun MyAppControl() {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val route = currentBackStackEntry?.destination?.route
+    val mainViewModel: MainViewModel = hiltViewModel()
 
     val items = listOf(
         BottomAppBarDataClass(
@@ -78,18 +80,30 @@ fun MyAppControl() {
         modifier = Modifier.fillMaxSize()
             .windowInsetsPadding(WindowInsets.navigationBars),
         bottomBar = {
-            AdvanceBottomBar(
-                modifier = Modifier.fillMaxWidth(),
-                navController = navController,
-                items = items,
-                route = route,
-            )
+            if (route != Screens.SearchScreen.route){
+                AdvanceBottomBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    navController = navController,
+                    items = items,
+                    route = route,
+                )
+            }
         },
         topBar = {
-            CustomTopAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                onSearchClick = {}
-            )
+            if (route != Screens.SearchScreen.route){
+                CustomTopAppBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    onSearchClick = {
+                        navController.navigate(Screens.SearchScreen.route)
+                    },
+                    onBackButtonClick = {
+                        navController.navigateUp()
+                    },
+                    route = route,
+                    onSearchBackButtonClick = {
+                    },
+                )
+            }
 
         }
     ) { paddingValues ->
@@ -108,7 +122,7 @@ fun HomeScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
 
-    val allProductState by viewModel.allProducts.collectAsState()
+    val allProductState by viewModel.searchData.collectAsState()
 
 
     when (val state = allProductState) {
@@ -133,7 +147,7 @@ fun HomeScreen(
         }
 
         is Resources.Empty -> {
-            CircularProgressIndicator()
+            CustomProgressBar()
         }
     }
 
@@ -141,7 +155,7 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenItemScreen(modifier: Modifier = Modifier, productList: List<ResponseItem>) {
+fun HomeScreenItemScreen(modifier: Modifier = Modifier, productList: List<ResponseItem>) {
 
     LazyVerticalGrid(
         modifier = modifier,

@@ -4,6 +4,7 @@ import AddProductResponse
 import ProductDetails
 import android.content.Context
 import android.net.Uri
+import androidx.compose.ui.geometry.Rect
 import com.rach.swipestore.common.Resources
 import com.rach.swipestore.data.remote.ApiService
 import com.rach.swipestore.domain.model.ResponseItem
