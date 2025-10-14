@@ -9,8 +9,10 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,6 +60,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.rach.swipestore.R
 import com.rach.swipestore.common.Resources
@@ -67,6 +70,7 @@ import com.rach.swipestore.presentation.theme.SwipeStoreTheme
 import com.rach.swipestore.presentation.theme.balooFontFamily
 import com.rach.swipestore.presentation.viewModel.FieldStateViewModel
 import com.rach.swipestore.presentation.viewModel.MainViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -91,16 +95,17 @@ fun AddProductScreen(
     var imageUri by remember { mutableStateOf<List<Uri>>(emptyList()) }
     var errorMessage by remember { mutableStateOf("") }
 
+    val network by mainViewModel.isConnected.collectAsStateWithLifecycle()
     //AddProduct Response By ViewModel
     val addProductResponse by mainViewModel.productAddedResponse.collectAsState()
+
     LaunchedEffect(addProductResponse) {
         when (addProductResponse) {
             is Resources.Success -> {
                 val data = (addProductResponse as Resources.Success<AddProductResponse>).data
                 data?.let {
                     if (it.success) {
-                        Toast.makeText(context, "Product Added Successfully", Toast.LENGTH_SHORT).show()
-                        Log.d("tomy","$it")
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                         fieldViewModel.clearAllFields()
                         imageUri = emptyList()
                     } else {
@@ -128,14 +133,16 @@ fun AddProductScreen(
     }
 
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(state = scrollState)
+            .verticalScroll(state = scrollState),
+        contentAlignment = Alignment.Center
     ) {
+
         Card(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .padding(16.dp),
             shape = RoundedCornerShape(20.dp),
             elevation = CardDefaults.cardElevation(8.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -151,6 +158,7 @@ fun AddProductScreen(
                         fontSize = 16.sp,
                     )
                 )
+                Text("$network")
                 Spacer(modifier = Modifier.height(6.dp))
                 AnimatedVisibility(
                     visible = errorMessage.isNotEmpty()
@@ -312,6 +320,7 @@ fun AddProductScreen(
                                         files = imageUri
                                     )
                                     mainViewModel.addProduct(
+                                        internetState = network,
                                         productDetails = productsDetails
                                     )
                                 }
@@ -332,13 +341,13 @@ fun AddProductScreen(
                     )
                 }
             }
-
-            if (addProductResponse is Resources.Loading) {
-                CustomProgressBar()
-            }
         }
 
+        if (addProductResponse is Resources.Loading) {
+            CustomProgressBar()
+        }
     }
+
 
 }
 

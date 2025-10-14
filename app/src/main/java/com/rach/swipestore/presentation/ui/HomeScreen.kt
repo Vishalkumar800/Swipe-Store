@@ -1,6 +1,5 @@
 package com.rach.swipestore.presentation.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,19 +9,11 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -33,7 +24,6 @@ import com.rach.swipestore.common.Resources
 import com.rach.swipestore.domain.model.ResponseItem
 import com.rach.swipestore.presentation.components.AdvanceBottomBar
 import com.rach.swipestore.presentation.components.BottomAppBarDataClass
-import com.rach.swipestore.presentation.components.CustomEmptyScreen
 import com.rach.swipestore.presentation.components.CustomProgressBar
 import com.rach.swipestore.presentation.components.CustomTopAppBar
 import com.rach.swipestore.presentation.components.ErrorScreen
@@ -43,12 +33,12 @@ import com.rach.swipestore.presentation.navigation.Screens
 import com.rach.swipestore.presentation.viewModel.MainViewModel
 
 @Composable
-fun MyAppControl() {
+fun MyAppControl(viewModel: MainViewModel) {
 
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val route = currentBackStackEntry?.destination?.route
-    val mainViewModel: MainViewModel = hiltViewModel()
+    val mainViewModel: MainViewModel
 
     val items = listOf(
         BottomAppBarDataClass(
@@ -77,10 +67,11 @@ fun MyAppControl() {
     )
 
     Scaffold(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .windowInsetsPadding(WindowInsets.navigationBars),
         bottomBar = {
-            if (route != Screens.SearchScreen.route){
+            if (route != Screens.SearchScreen.route) {
                 AdvanceBottomBar(
                     modifier = Modifier.fillMaxWidth(),
                     navController = navController,
@@ -90,7 +81,7 @@ fun MyAppControl() {
             }
         },
         topBar = {
-            if (route != Screens.SearchScreen.route){
+            if (route != Screens.SearchScreen.route) {
                 CustomTopAppBar(
                     modifier = Modifier.fillMaxWidth(),
                     onSearchClick = {
@@ -153,6 +144,7 @@ fun HomeScreen(
 
 
 }
+
 
 @Composable
 fun HomeScreenItemScreen(modifier: Modifier = Modifier, productList: List<ResponseItem>) {

@@ -85,9 +85,6 @@ fun AdvanceBottomBar(
                         selected = route == item.route,
                         onClick = {
                             navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
-                                }
                                 launchSingleTop = true
                                 restoreState = true
                             }

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
     alias(libs.plugins.dagger.plugin)
 }
 
@@ -84,4 +85,8 @@ dependencies {
 
     // Paging
     implementation(libs.androidx.paging.compose)
+    implementation("androidx.work:work-runtime-ktx:2.10.5")
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+
 }

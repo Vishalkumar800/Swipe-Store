@@ -10,10 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomProgressBar() {
+fun CustomProgressBar(
+    modifier: Modifier = Modifier,
+) {
 
     Box (
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ){
