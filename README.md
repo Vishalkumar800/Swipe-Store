@@ -1,3 +1,4 @@
+
 # 🛒 Swipe Store - Android App (Jetpack Compose + Clean Architecture + Hilt)
 
 A modern Android application built with **Jetpack Compose**, following **Clean Architecture**, and powered by **Dagger Hilt**, **Room**, and **WorkManager** for offline-first data handling.
@@ -31,7 +32,8 @@ This project is a solution to the **Swipe Android Assignment**, implementing bot
 |--------------------|
 |![photo_2025-10-15_08-26-12](https://github.com/user-attachments/assets/616b0345-0189-4eb6-8fa2-fac1b3f526f3)|
 
-
+## 📸 Video
+https://github.com/user-attachments/assets/7c0b3947-8e72-4c70-a638-6f6c6c41bd1c
 
 ## 🧱 Architecture Overview
 
