@@ -158,7 +158,6 @@ fun AddProductScreen(
                         fontSize = 16.sp,
                     )
                 )
-                Text("$network")
                 Spacer(modifier = Modifier.height(6.dp))
                 AnimatedVisibility(
                     visible = errorMessage.isNotEmpty()

@@ -2,6 +2,7 @@ package com.rach.swipestore.presentation.viewModel
 
 import AddProductResponse
 import ProductDetails
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rach.swipestore.common.Resources
@@ -100,6 +101,7 @@ class MainViewModel @Inject constructor(
     fun addProduct(internetState: Boolean, productDetails: ProductDetails) {
         viewModelScope.launch {
             if (internetState) {
+                Log.d("tom2","upload $productDetails")
                 repository.addProduct(
                     productDetails = productDetails
                 ).collect { response ->
@@ -109,6 +111,7 @@ class MainViewModel @Inject constructor(
                 _productAddedResponse.value = Resources.Loading()
                 try {
                     delay(1000)
+                    Log.d("tom2","normal $productDetails")
                     offlineRepository.addInRoom(productDetails)
                     _productAddedResponse.value = Resources.Success(
                         data = AddProductResponse(

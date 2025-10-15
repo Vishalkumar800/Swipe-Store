@@ -1,6 +1,7 @@
 package com.rach.swipestore.data.repoImp
 
 import ProductDetails
+import android.util.Log
 import com.rach.swipestore.data.ProductWithId
 import com.rach.swipestore.data.local.AppDatabase
 import com.rach.swipestore.data.local.Entity
@@ -16,6 +17,7 @@ class OfflineFuncRepoImp @Inject constructor(
 ) : OfflineFuncRepo {
 
     override suspend fun addInRoom(productDetails: ProductDetails) {
+        Log.d("tom2","entity ${productDetails.toEntity()}")
         appDatabase.dao().insert(productDetails.toEntity())
     }
 

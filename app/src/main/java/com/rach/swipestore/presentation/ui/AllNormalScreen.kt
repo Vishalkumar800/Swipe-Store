@@ -1,30 +1,35 @@
 package com.rach.swipestore.presentation.ui
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import com.rach.swipestore.ProductionWorker
+import com.rach.swipestore.R
 
 @Composable
 fun PaymentScreen() {
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Payment Screen")
+        Image(
+            painter = painterResource(R.drawable.undraw_page_eaten_b2rt), contentDescription = null
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text("Payment Screen is Under Development")
     }
 
 }
@@ -32,41 +37,17 @@ fun PaymentScreen() {
 
 @Composable
 fun SettingsScreen() {
-
-    val context = LocalContext.current
-    val owner = LocalLifecycleOwner.current
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Settings Screen")
-
-        Button(onClick = {
-
-            val workManager = WorkManager.getInstance(context)
-            workManager.cancelAllWorkByTag("TestWorkerTag")
-            val workerRequest =
-                OneTimeWorkRequestBuilder<ProductionWorker>().addTag("TestWorkerTag").build()
-            workManager.enqueue(workerRequest)
-
-            workManager.getWorkInfoByIdLiveData(workerRequest.id)
-                .observe(owner) { workInfo ->
-                    when (workInfo?.state) {
-                        WorkInfo.State.ENQUEUED -> Log.d("tomy", "Work enqueued")
-                        WorkInfo.State.RUNNING -> Log.d("tomy", "Work running")
-                        WorkInfo.State.SUCCEEDED -> Log.d("tomy", "Work succeeded")
-                        WorkInfo.State.FAILED -> Log.d(
-                            "tomy",
-                            "Work failed: ${workInfo.outputData}"
-                        )
-
-                        else -> Log.d("tomy", "Work state: ${workInfo?.state}")
-                    }
-                }
-        }) {
-            Text("Hip")
-        }
-
+        Image(
+            painter = painterResource(R.drawable.undraw_page_eaten_b2rt), contentDescription = null
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text("Setting Screen is Under Development")
     }
 }

@@ -12,8 +12,6 @@ import com.rach.swipestore.data.repoImp.ProductRepoImp
 import com.rach.swipestore.domain.connectivity.ConnectivityObserver
 import com.rach.swipestore.domain.repository.OfflineFuncRepo
 import com.rach.swipestore.domain.repository.ProductRepository
-import com.rach.swipestore.testing.TestRepo
-import com.rach.swipestore.testing.TestRepoImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -80,13 +78,6 @@ object AppModule {
     @Singleton
     fun provideOfflineRepo(appDatabase: AppDatabase): OfflineFuncRepo {
         return OfflineFuncRepoImp(appDatabase)
-    }
-
-    //WorkManager Hai
-    @Provides
-    @Singleton
-    fun provideTest(@ApplicationContext context: Context): TestRepo {
-        return TestRepoImp(context)
     }
 
 

@@ -5,7 +5,7 @@ data class ProductDetails(
     val productType: String?,
     val price: String?,
     val tax: String?,
-    val files: List<Uri>? // list of Uri.toString()
+    val files: List<Uri>?
 )
 
 data class AddProductResponse(

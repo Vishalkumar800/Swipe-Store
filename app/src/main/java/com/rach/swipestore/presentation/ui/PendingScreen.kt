@@ -103,7 +103,7 @@ fun PendingScreenItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            // 🔹 Product image preview (first image only)
+
             if (!product.files.isNullOrEmpty()) {
                 AsyncImage(
                     model = product.files.first(),
@@ -115,7 +115,7 @@ fun PendingScreenItem(
                     contentScale = ContentScale.Crop
                 )
             } else {
-                // Placeholder if no image
+
                 Box(
                     modifier = Modifier
                         .size(72.dp)
@@ -134,7 +134,7 @@ fun PendingScreenItem(
 
             Spacer(modifier = Modifier.width(14.dp))
 
-            // 🔹 Product details
+
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -171,7 +171,6 @@ fun PendingScreenItem(
                 }
             }
 
-            // 🔹 Pending tag
             Box(
                 modifier = Modifier
                     .background(

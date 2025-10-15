@@ -22,17 +22,13 @@ class MyApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-
-        // Dependencies initialize karen
         val apiService = createApiService()
         val appDatabase = createDatabase()
         val repository: ProductRepository = ProductRepoImp(apiService, this)
         val offlineFuncRepo: OfflineFuncRepo = OfflineFuncRepoImp(appDatabase)
 
-        // Worker factory banayein
         customWorkerFactory = ProductionWorkerFactory(repository, offlineFuncRepo)
 
-        // WorkManager initialize karen
         WorkManager.initialize(this, workManagerConfiguration)
     }
 

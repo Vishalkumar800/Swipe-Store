@@ -33,7 +33,6 @@
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove" />
 
-        <!-- Startup library bhi disable karen -->
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
