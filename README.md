@@ -20,6 +20,15 @@ This project is a solution to the **Swipe Android Assignment**, implementing bot
 
 ---
 
+## 📸 Screenshots  
+
+| Home Screen | Search Details | Add Product |
+|--------------|----------------|--------------|
+| ![Screenshot_20251015_081047](https://github.com/user-attachments/assets/3fba133c-291a-4972-acbf-0bda6fa25419) |![Screenshot_20251015_081053](https://github.com/user-attachments/assets/d114e998-e33c-4cd6-833e-f860ed274b2a) | ![Screenshot_20251015_081105](https://github.com/user-attachments/assets/222c9cd2-09c6-446a-9fa6-b91153065e70) | 
+| ![Screenshot_20251015_081111](https://github.com/user-attachments/assets/1db493ec-3251-4477-9644-71d3309f8f8f) | ![Screenshot_20251015_081128](https://github.com/user-attachments/assets/8391462e-c0b8-4d22-a998-92933f55f762) | ![Screenshot_20251015_081136](https://github.com/user-attachments/assets/65f3f1c3-6fdd-4522-a615-581efe192778) |  
+
+
+
 ## 🧱 Architecture Overview
 
 This app is built using **MVVM** with **Clean Architecture** principles:
